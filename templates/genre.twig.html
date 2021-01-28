@@ -1,0 +1,77 @@
+{% extends "BaseTemplate.html" %}
+{% block title %} Liste des genres {% endblock %}
+{% block head %}
+{{ parent() }}
+  <link rel="stylesheet" href="style.css" />
+{% endblock %}
+
+
+
+{% block content %}
+
+ <br><br><br><br>
+
+<div id="affichage_films">
+
+{% if genres is not empty %}
+
+  <form>
+
+  <table id="tableau_affichage">
+    <tr>
+      <td class="celluleP" >Code </br><button class="boutons" name="action" type="submit" value="list_genre~code_genre">^</button></td>
+      <td class="celluleG" >Nom du genre </br><button class="boutons" name="action" type="submit" value="list_genre~nom_genre">^</button></td>
+      <td class="celluleP" >Supp. </br></td>
+    </tr>
+  </form>
+
+
+
+      {% for genre in genres %}
+        <tr>
+        <td class="celluleP" >{{genre.code_genre}}</td>
+        <td class="celluleG" >{{genre.nom_genre}}</td>
+        <td class="celluleP" ><a class="bt_suppr" href="controleur.php?action=suppr_genre&code_genre={{genre.code_genre}}">X</a>
+        </td>
+      </tr>
+      {% endfor %}
+    {% endif %}
+    </table>
+    <br>
+    &nbsp;
+
+
+
+<!-- Formulaire d'ajout d'un genre -->
+
+
+    <br>
+    <table>
+    <tr>
+      <td></td>
+      <td class="celluleG" >Nom du genre</td>
+      <td class="celluleP" >Ajout</td>
+    </tr>
+
+    <tr>
+    <form method = "GET" action = "controleur.php">
+      <td><input type = "hidden" name ="action" value="add_genre"></td>
+      <td>
+        <input type ="text" name="nom_genre" required>
+      </td>
+      <td>
+        <input class="boutons" type="submit"value="Ajouter">
+      </td>
+
+
+
+    </form>
+    </tr>
+
+    </table>
+
+
+  <br>
+  <p id="retour"><a href="#">Haut de page &uarr;</a></p>
+</div>
+{% endblock %}

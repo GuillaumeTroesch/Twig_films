@@ -1,0 +1,199 @@
+body{
+  background: lightgrey;
+  font-family: Calibri;
+  width: 100%;
+  margin: 0 20px 20px 20px;
+}
+
+/* Menu */
+
+#menu{
+list-style-type: none;
+text-align: center;
+margin: 0 0 60px 0;
+padding: 1% 0 1% 0;
+font-size: 200%;
+width: 100%;
+background: lightgrey;
+}
+
+.navigation{
+display: inline;
+text-align: center;
+border-left: 2px solid black;
+border-right: 2px solid black;
+padding:5px 10px 5px 10px;
+width:100%;
+font-weight: bold;
+}
+
+.navigation:first-child{
+border-left: none;
+}
+
+.navigation:last-child{
+border-right: none;
+}
+
+nav a{
+text-decoration: none;
+}
+
+/**/
+
+/* Haut de page */
+
+h2{
+  color: #2B2B2B;
+}
+
+
+
+
+#haut_page{
+  position: fixed;
+  width: 100%;
+}
+
+#bloc_recherche{
+  border: 3px solid black;
+  border-radius: 5px;
+  padding:10px;
+  width: 20%;
+  margin-top: 20px;
+  background: lightgrey;
+  position: fixed;
+}
+
+#banniere{
+  background: lightgrey;
+}
+
+
+/**/
+
+/* Affichage des films */
+
+
+#affichage_films{
+  width: 100%;
+}
+
+table{
+  border: 2px solid #FAFAFA;
+  text-align: center;
+  width: 100%;
+  border-collapse:collapse;
+  margin:auto;
+  vertical-align: middle;
+}
+
+
+table tr:first-child{
+  background:#2B2B2B;
+  color: #FAFAFA;
+}
+
+table tr:nth-child(2n){
+  background:#FAFAFA;
+  color: #2B2B2B;
+}
+
+table tr:nth-child(2n+3){
+  background: grey;
+  color: #FAFAFA;
+}
+
+
+
+/**/
+
+
+/* Détails d'un film' */
+
+#infos_film{
+  display: flex;
+}
+
+#details_films{
+  flex: 0 1 auto;
+}
+
+#genres_et_acteurs_films{
+  margin-left: 30px;
+  flex: 0 1 auto;
+}
+
+/**/
+
+
+
+/* Boutons */
+
+
+.boutons:hover{
+  color: white;
+  background-color: #2B2B2B;
+}
+
+.bt_suppr {
+  background-color: #bbbbbb;
+  color: white;
+  padding: 1px 25px;
+  text-align: center;
+  text-decoration: none;
+}
+
+/**/
+
+
+
+/* Liens hypertextes normaux et au survol */
+
+
+a{
+  color: #2B2B2B;
+  text-decoration: None;
+}
+
+table tr:first-child a, table tr:nth-child(2n+3) a{
+  color: #FAFAFA;
+}
+
+
+table tr:nth-child(2n) a{
+  color: #2B2B2B;
+}
+
+
+a:hover, table tr:first-child a:hover, table tr:nth-child(2n+3) a:hover, table tr:nth-child(2n) a:hover{
+  color: blue;
+}
+
+
+.tri{
+  color: #FAFAFA;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.tri:hover{
+  color: blue;
+  text-decoration: underline;
+}
+
+/**/
+
+/* Bas de page */
+
+#retour{
+  float: right;
+}
+
+
+footer{
+  margin-top: 40px;
+  border-top: 2px solid black;
+}
+
+/**/

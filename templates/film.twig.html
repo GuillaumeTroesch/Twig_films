@@ -1,0 +1,267 @@
+{% extends "BaseTemplate.html" %}
+{% block title %} Liste des films {% endblock %}
+{% block head %}
+{{ parent() }}
+  <link rel="stylesheet" href="style.css" />
+{% endblock %}
+
+
+
+{% block recherche %}
+
+
+
+
+
+  <br><br><br><br>
+
+  <div id="bloc_recherche">
+    <input id="bt_recherche" class="boutons" type="button" value="Ouvrir le volet de recherche" onclick="afficheFormRecherche()">
+    <form id="recherche" method="GET" action="controleur.php" hidden>
+      <br><br>
+      <input type="hidden" name="action" value="list_recherche">
+      <label for "titre">Titre :</label>
+        <input type="text" name="titre" size=20 placeholder="Entrez le titre">
+        <br><br>
+        <label for "real">Réalisateur :</label>
+        <input type="text" name="real" size=20 placeholder="Entrez le nom">
+        <br><br>
+        <label for "date_recherche">Année :</label>
+        <input type="text" name="date_recherche" pattern="[0-9]{4}" placeholder="Entrez la date exacte">
+        <br><br>
+        <input class="boutons" type="submit" value="Rechercher">
+    </form>
+  </div>
+<br><br><br><br><br>
+{{message}}
+
+<br><br><br>
+
+
+
+<script>
+
+
+
+
+
+  function afficheFormRecherche(){
+    var form = document.getElementById("recherche");
+    var bloc = document.getElementById("bloc_recherche");
+    var bouton = document.getElementById("bt_recherche");
+    if (form.hidden){
+      form.hidden = false;
+      bloc.style.background = "#FAFAFA";
+      bouton.value = "Fermer le volet de recherche";
+    }
+    else{
+      form.hidden = true;
+      bloc.style.background = "lightgrey";
+      bouton.value = "Ouvrir le volet de recherche";
+    }
+  }
+
+</script>
+
+
+{% endblock %}
+
+
+
+
+{% block content %}
+
+<div id="affichage_films">
+
+{% if films is not empty %}
+  <form id="tri" method="GET" action="controleur.php">
+    <input type="hidden" name="titre" value={{recherche.titre}}>
+    <input type="hidden" name="real" value={{recherche.real}}>
+    <input type="hidden" name="date_recherche" value={{recherche.date_recherche}}>
+
+
+  <table id="tableau_affichage">
+    <tr>
+      <td>Code </br><button class="boutons" name="action" type="submit" value="films">^</button></td>
+      <td>Titre original </br><button class="boutons" name="action" type="submit" value="films~titre_original">^</button></td>
+      <td>Titre français </br><button class="boutons" name="action" type="submit" value="films~titre_francais">^</button></td>
+      <td>Pays </br><button class="boutons" name="action" type="submit" value="films~pays">^</button></td>
+      <td>Date </br><button class="boutons" name="action" type="submit" value="films~date">^</button></td>
+      <td>Durée </br><button class="boutons" name="action" type="submit" value="films~duree">^</button></td>
+      <td>Couleur </br><button class="boutons" name="action" type="submit" value="films~couleur">^</button></td>
+      <td>Réalisateur </br><button class="boutons" name="action" type="submit" value="films~nom">^</button></td>
+      <td>Supp. </br></td>
+    </tr>
+  </form>
+
+
+
+      {% for film in films %}
+        <tr>
+        <td>{{film.code_film}}</td>
+        <td>
+          <a href="controleur.php?action=detail&code_film={{film.code_film}}&message=">{{film.titre_original}}</a>
+        </td>
+        <td>{{film.titre_francais}}</td>
+        <td>{{film.pays}}</td>
+        <td>{{film.date}}</td>
+        <td>{{film.duree}}</td>
+        <td>{{film.couleur}}</td>
+        <td><a href="controleur.php?action=detail_real&code_indiv={{film.code_indiv}}&message=">{{film.realisateur}}</a></td>
+        <td><a class="bt_suppr" href="controleur.php?action=suppr&code_film={{film.code_film}}">X</a>
+        </td>
+      </tr>
+      {% endfor %}
+    {% endif %}
+    </table>
+    <br>
+    &nbsp;
+
+
+<!-- Formulaire d'ajout d'un film -->
+
+
+    <br>
+    <table>
+    <tr>
+      <td></td>
+      <td>Titre original</td>
+      <td>Titre français</td>
+      <td>Pays</td>
+      <td>Date</td>
+      <td>Durée</td>
+      <td>Couleur</td>
+      <td>Réalisateur</td>
+      <td>Image</td>
+      <td>Ajout</td>
+    </tr>
+
+
+
+
+
+    <tr>
+    <form method = "GET" action = "controleur.php">
+      <td><input type = "hidden" name ="action" value="add"></td>
+      <td>
+        <input type ="text" name="titre_original" required>
+      </td>
+      <td>
+        <input type = "text" name="titre_francais" required>
+      </td>
+      <td>
+        <input type = "text" name="pays" required>
+      </td>
+      <td>
+        <input type="text" name="date" pattern="[0-9]{4}" required>
+      </td>
+      <td>
+        <input type="text" name="duree" pattern="[0-9]{1,3}" required>
+      </td>
+      <td>
+        <select name="couleur" required>
+          <option value="couleur">couleur</option>
+          <option value="nb">NB</option>
+          <option value="nb_couleur">NB/couleur</option>
+        </select>
+      </td>
+      <td>
+        <select name="lreal">
+          {% for real in reals %}
+          <option value={{real.code_indiv}}>{{real.prenom}} {{real.nom}}</option>
+          {% endfor %}
+        </select>
+
+      </td>
+      <td>
+        <input type="text" name="image" required>
+      </td>
+      <td>
+        <input class="boutons" type="submit" value="Ajouter">
+      </td>
+
+    </tr>
+    </table>
+    </form>
+
+
+
+
+
+    <br>
+    <input id="bt_ajout" class="boutons" type="button" value="Vous ne trouvez pas le réalisateur recherché ? Ajoutez-le" onclick="afficheFormAjoutReal()">
+
+
+    &nbsp;
+
+<!-- Formulaire d'ajout d'un réalisateur -->
+
+  <div id="ajout_real" hidden>
+    <br>
+    <table>
+    <tr>
+      <td></td>
+      <td>Nom</td>
+      <td>Prénom</td>
+      <td>Nationalité</td>
+      <td>Date de naissance</td>
+      <td>Date de décès</td>
+      <td>Ajout</td>
+    </tr>
+
+    <tr>
+    <form method = "GET" action = "controleur.php">
+      <td><input type = "hidden" name ="action" value="add_real"></td>
+      <td>
+        <input type ="text" name="nom" required>
+      </td>
+      <td>
+        <input type = "text" name="prenom" required>
+      </td>
+      <td>
+        <input type = "text" name="nationalite" required>
+      </td>
+      <td>
+        <input type="text" name="date_naiss" pattern="[0-9]{4}" required>
+      </td>
+      <td>
+        <input type="text" name="date_mort" pattern="[0-9]{1,4}" required>
+      </td>
+      <td>
+        <input class="boutons" type="submit"value="Ajouter">
+      </td>
+
+    </tr>
+    </table>
+    </form>
+
+
+
+  </div>
+
+  <script>
+
+
+
+
+
+    function afficheFormAjoutReal(){
+      var form = document.getElementById("ajout_real");
+      var bouton = document.getElementById("bt_ajout");
+      if (form.hidden){
+        form.hidden = false;
+        bouton.value = "Fermer le formulaire";
+      }
+      else{
+        form.hidden = true;
+        bouton.value = "Vous ne trouvez pas le réalisateur recherché ? Ajoutez-le";
+      }
+    }
+
+  </script>
+
+
+  <br>
+  <p id="retour"><a href="#">Haut de page &uarr;</a></p>
+</div>
+{% endblock %}

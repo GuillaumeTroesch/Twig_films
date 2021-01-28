@@ -1,0 +1,109 @@
+{% extends "BaseTemplate.html" %}
+{% block title %}Détails de {{film.titre_original}} {% endblock %}
+
+
+{% block content %}
+<br><br><br>
+<h2>{{film.titre_original}}</h2>
+
+<div id="infos_film">
+
+
+<div id="details_films">
+
+<form id="fdetail" action="controleur.php">
+  <fieldset>
+    <legend>Détails</legend>
+    <input type="hidden" name="action" value="patch">
+    <input type="hidden" name="code_film" value="{{film.code_film}}">
+    <p> <label for="titre_original">Titre original :</label>
+  <input type="text" name="titre_original" size="40" value="{{film.titre_original}}" disabled>
+  <p> <label for="titre_francais">Titre français :</label>
+  <input type="text" name="titre_francais" size="40" value="{{film.titre_francais}}">
+  <p> <label for="pays">Pays :</label>
+  <input type="text" name="pays" value="{{film.pays}}">
+  <p> <label for="date">Date :</label>
+  <input type="text" name="date" pattern="[0-9]{4}" value="{{film.date}}">
+  <p> <label for="duree">Durée :</label>
+  <input type="text" name="duree" pattern="[0-9]{1,3}" value="{{film.duree}}">
+  <p> <label for="couleur">Couleur :</label>
+  <select name="couleur" value="{{film.couleur}}">
+    <option value="couleur" {% if film.couleur=="couleur" %}selected{% endif %}>couleur</option>
+    <option value="nb" {% if film.couleur=="nb" %}selected{% endif %}>NB</option>
+    <option value="nb_couleur" {% if film.couleur=="nb_couleur" %}selected{% endif %}>NB/couleur</option>
+  </select>
+  <p> <label for="realisateur">Réalisateur :</label>
+  <select name="realisateur">
+    {% for real in reals %}
+    <option value={{real.code_indiv}} {% if real.code_indiv==film.realisateur %}selected{% endif %}>{{real.prenom}} {{real.nom}}</option>
+    {% endfor %}
+  </select>
+
+
+  <p> <label for="image">Image :</label>
+  <input type="text" name="image" value="{{film.image}}">
+  <p>
+  <input type="submit" value="Modifier">
+</fieldset>
+</form>
+
+</div>
+
+<div id="genres_et_acteurs_films">
+
+<form id="genres" action="controleur.php">
+<fieldset>
+  <legend>Genre(s)</legend>
+<table>
+  <input type="hidden" name="code_film" value={{film.code_film}}>
+  {% for genre in genres %}
+  <p><tr>- {{genre.nom_genre}}<button class="boutons" name="action" type="submit" value={{ 'detail_suppr_genre%' ~ genre.code_genre }}>x</button></tr></p>
+  {% endfor %}
+
+  <p> <label for="ajout_genre">Ajouter un genre au film :&nbsp;</label>
+  <select name="ajout_genre">
+    {% for genre in all_genres %}
+    <option value={{genre.code_genre}}>{{genre.nom_genre}}</option>
+    {% endfor %}
+  </select>
+  <button class="boutons" name="action" type="submit" value='detail_add_genre'>Ajouter</button>
+
+</table>
+</fieldset>
+</form>
+
+
+<br>
+
+
+
+
+<form id="acteurs" action="controleur.php">
+<fieldset>
+  <legend>Acteur(s)</legend>
+<table>
+  <input type="hidden" name="code_film" value={{film.code_film}}>
+  {% for acteur in acteurs %}
+  <p><tr>- {{acteur.nom}} {{acteur.prenom}}<button class="boutons" name="action" type="submit" value={{ 'detail_suppr_acteur%' ~ acteur.code_indiv }}>x</button></tr></p>
+  {% endfor %}
+
+  <p> <label for="ajout_acteur">Ajouter un acteur au film :&nbsp;</label>
+  <select name="ajout_acteur">
+    {% for real in reals %}
+    <option value={{real.code_indiv}}>{{real.prenom}} {{real.nom}}</option>
+    {% endfor %}
+  </select>
+  <button class="boutons" name="action" type="submit" value='detail_add_acteur'>Ajouter</button>
+
+
+
+
+</table>
+</fieldset>
+</form>
+
+</div>
+
+</div>
+
+{% endblock %}

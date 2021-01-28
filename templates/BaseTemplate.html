@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang = "fr">
+<head>
+  {% block head %}
+  <meta charset = "utf-8">
+  <link rel = "stylesheet" href = "style.css"/>
+  <title>{% block title %}{% endblock %}</title>
+  {% endblock %}
+</head>
+
+
+<body>
+  <div id="banniere">
+    <header>
+      {% block accueil %}
+
+      <div id="haut_page">
+      <nav>
+      	<ul id="menu">
+      		<li class="navigation"><a href="controleur.php">Liste des films</a></li>
+      		<li class="navigation"><a href="controleur.php?action=list_indiv">Liste des acteurs/réalisateurs</a></li>
+      		<li class="navigation"><a href="controleur.php?action=list_genre">Liste des genres</a></li>
+      	</ul>
+      </nav>
+      </div>
+      {% endblock %}
+    </header>
+    <section>
+      {% block recherche %}{% endblock %}
+    </section>
+  </div>
+  <section id="content">
+    {% block content %}{% endblock %}
+  </section>
+  <br>
+  <footer id = "footer">
+    {% block footer %}
+    <p>&copy; Guillaume TROESCH et Suzy PIAT - 2018</p>
+
+    {% endblock %}
+  </footer>
+</body>
+</html>

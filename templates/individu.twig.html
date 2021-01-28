@@ -1,0 +1,160 @@
+{% extends "BaseTemplate.html" %}
+{% block title %} Liste des acteurs {% endblock %}
+{% block head %}
+{{ parent() }}
+  <link rel="stylesheet" href="style.css" />
+{% endblock %}
+
+
+
+{% block recherche %}
+
+
+
+
+
+  <br><br><br><br>
+
+  <div id="bloc_recherche">
+    <input id="bt_recherche" class="boutons" type="button" value="Ouvrir le volet de recherche" onclick="afficheFormRecherche()">
+    <form id="recherche" method="GET" action="controleur.php" hidden>
+      <br><br>
+      <input type="hidden" name="action" value="list_indiv">
+      <label for "nom_indiv">Nom :</label>
+        <input type="text" name="nom_indiv" size=20 placeholder="Entrez le nom">
+        <br><br>
+        <label for "prenom_indiv">Prénom :</label>
+        <input type="text" name="prenom_indiv" size=20 placeholder="Entrez le prénom">
+        <br><br>
+        <input class="boutons" type="submit" value="Rechercher">
+    </form>
+  </div>
+<br><br><br><br><br>
+{{message}}
+
+<br><br><br>
+
+
+
+<script>
+
+
+
+
+
+  function afficheFormRecherche(){
+    var form = document.getElementById("recherche");
+    var bloc = document.getElementById("bloc_recherche");
+    var bouton = document.getElementById("bt_recherche");
+    if (form.hidden){
+      form.hidden = false;
+      bloc.style.background = "#FAFAFA";
+      bouton.value = "Fermer le volet de recherche";
+    }
+    else{
+      form.hidden = true;
+      bloc.style.background = "lightgrey";
+      bouton.value = "Ouvrir le volet de recherche";
+    }
+  }
+
+</script>
+
+
+{% endblock %}
+
+
+{% block content %}
+
+<div id="affichage_films">
+
+{% if individus is not empty %}
+  <form id="tri" method="GET" action="controleur.php">
+    <input type="hidden" name="nom_indiv" value={{recherche.nom_indiv}}>
+    <input type="hidden" name="prenom_indiv" value={{recherche.prenom_indiv}}>
+
+
+  <table id="tableau_affichage">
+    <tr>
+      <td class="celluleP" >Code </br><button class="boutons" name="action" type="submit" value="list_indiv">^</button></td>
+      <td class="celluleG" >Nom </br><button class="boutons" name="action" type="submit" value="list_indiv~nom">^</button></td>
+      <td class="celluleG" >Prénom </br><button class="boutons" name="action" type="submit" value="list_indiv~prenom">^</button></td>
+      <td class="celluleG" >Nationalité </br><button class="boutons" name="action" type="submit" value="list_indiv~nationalite">^</button></td>
+      <td class="celluleP" >Date de naissance </br><button class="boutons" name="action" type="submit" value="list_indiv~date_naiss">^</button></td>
+      <td class="celluleP" >Date de décès </br><button class="boutons" name="action" type="submit" value="list_indiv~date_mort">^</button></td>
+      <td class="celluleP" >Supp. </br></td>
+    </tr>
+  </form>
+
+
+
+      {% for individu in individus %}
+        <tr>
+        <td class="celluleP" >{{individu.code_indiv}}</td>
+        <td class="celluleG" >
+          <a href="controleur.php?action=detail_real&code_indiv={{individu.code_indiv}}&message=">{{individu.nom}}</a>
+        </td>
+        <td class="celluleG" ><a href="controleur.php?action=detail_real&code_indiv={{individu.code_indiv}}&message=">{{individu.prenom}}</a></td>
+        <td class="celluleG" >{{individu.nationalite}}</td>
+        <td class="celluleP" >{{individu.date_naiss}}</td>
+        <td class="celluleP" >{{individu.date_mort}}</td>
+        <td class="celluleP" ><a class="bt_suppr" href="controleur.php?action=suppr_real&code_indiv={{individu.code_indiv}}">X</a>
+        </td>
+      </tr>
+      {% endfor %}
+    {% endif %}
+    </table>
+    <br>
+    &nbsp;
+
+
+
+<!-- Formulaire d'ajout d'un réalisateur -->
+
+
+    <br>
+    <table>
+    <tr>
+      <td></td>
+      <td class="celluleG" >Nom</td>
+      <td class="celluleG" >Prénom</td>
+      <td class="celluleG" >Nationalité</td>
+      <td class="celluleP" >Date de naissance</td>
+      <td class="celluleP" >Date de décès</td>
+      <td class="celluleP" >Ajout</td>
+    </tr>
+
+    <tr>
+    <form method = "GET" action = "controleur.php">
+      <td><input type = "hidden" name ="action" value="add_real"></td>
+      <td>
+        <input type ="text" name="nom" required>
+      </td>
+      <td>
+        <input type = "text" name="prenom" required>
+      </td>
+      <td>
+        <input type = "text" name="nationalite" required>
+      </td>
+      <td>
+        <input type="text" name="date_naiss" pattern="[0-9]{4}" required>
+      </td>
+      <td>
+        <input type="text" name="date_mort" pattern="[0-9]{1,4}" required>
+      </td>
+      <td>
+        <input class="boutons" type="submit"value="Ajouter">
+      </td>
+
+
+
+    </form>
+    </tr>
+
+    </table>
+
+
+  <br>
+  <p id="retour"><a href="#">Haut de page &uarr;</a></p>
+</div>
+{% endblock %}

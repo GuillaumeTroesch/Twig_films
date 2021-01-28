@@ -1,0 +1,30 @@
+{% extends "BaseTemplate.html" %}
+{% block title %}Détails de {{real.prenom}} {{real.nom}} {% endblock %}
+
+
+{% block content %}
+<br><br><br>
+<h2>{{real.prenom}} {{real.nom}}</h2>
+<form id="rdetail" action="controleur.php">
+  <fieldset>
+    <legend>Détails</legend>
+    <input type="hidden" name="action" value="modif_real">
+    <input type="hidden" name="code_indiv" value="{{real.code_indiv}}">
+    <p> <label for="nom">Nom :</label>
+  <input type="text" name="nom" size="40" value="{{real.nom}}">
+  <p> <label for="prenom">Prénom :</label>
+  <input type="text" name="prenom" size="40" value="{{real.prenom}}">
+  <p> <label for="nationalite">Nationalité :</label>
+  <input type="text" name="nationalite" value="{{real.nationalite}}">
+  <p> <label for="date_naiss">Date de naissance :</label>
+  <input type="text" name="date_naiss" pattern="[0-9]{4}" value="{{real.date_naiss}}">
+  <p> <label for="date_mort">Date de décès :</label>
+  <input type="text" name="date_mort" pattern="[0-9]{1,4}" value="{{real.date_mort}}">
+  <p>
+  <input type="submit" name="action_real" value="Modifier">
+
+</fieldset>
+</form>
+
+
+{% endblock %}
